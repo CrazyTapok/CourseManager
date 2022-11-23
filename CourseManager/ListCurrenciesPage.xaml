@@ -1,0 +1,80 @@
+﻿<Page x:Class="CourseManager.ListCurrenciesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CourseManager" xmlns:col="clr-namespace:System.Collections;assembly=System.Runtime"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ListCurrenciesPage">
+
+    <Grid>
+        <Grid VerticalAlignment="Top" Height="70" Background="#2F3435">
+            <Grid Margin="10">
+                <Grid HorizontalAlignment="Left" Width="40">
+                    <Image Source="/icon_v2.png" />
+                </Grid>
+
+                <Grid HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="5,0">
+                            <Label Content="От" Foreground="#FFF79C1D" FontSize="14"/>
+                            <DatePicker VerticalAlignment="Center" Name="startDate"  SelectedDateFormat="Short">
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </StackPanel>
+
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="5,0">
+                            <Label Content="До" Foreground="#FFF79C1D" FontSize="14"/>
+                            <DatePicker VerticalAlignment="Center" Name="endDate"  SelectedDateFormat="Short">
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                            <Button x:Name="getAllCourses" Content="Получить курсы" Background="#F79C1D" Height="25" Margin="5" FontSize="14" Padding="5,0" Click="GetButton_Currencies"/>
+
+                            <Button x:Name="saveEXL" Content="Выгрузить в Excel" Background="#F79C1D" Height="25" Margin="5" FontSize="14" Padding="5,0" Click="SaveButton_Currencies"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Margin="0,70,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="currencyList" ItemsSource="{DynamicResource ResourceKey=currencies}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Cur_Periodicity}">Переодичность установления</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Cur_Code}" Width="100">Цифровой код</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Cur_Abbreviation}">Буквенный код</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Cur_Name}">Наименование на русском языке</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Cur_Name_Eng}">Наименование на английском языке</GridViewColumn>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Click="CheckBoxChanged" Tag="{Binding Path=Cur_Abbreviation}"></CheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.Resources>
+                        <col:ArrayList x:Key="currencies">
+
+                        </col:ArrayList>
+                    </ListView.Resources>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
